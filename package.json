@@ -1,10 +1,8 @@
 {
   "name": "rollup-plugin-mxn-svg",
   "version": "0.2.0",
-  "description": "Import SVG files as JSX components",
-  "main": "dist/rollup-plugin-svgi.js",
-  "module": "rollup-plugin-svgi.mjs",
-  "jsnext:main": "rollup-plugin-svgi.mjs",
+  "description": "Rollup plugin that imports SVG files as JSX components",
+  "main": "rollup-plugin-mxn-svg.js",
   "scripts": {
     "build": "rollup -c",
     "prepublishOnly": "npm run build",
@@ -12,16 +10,18 @@
     "watch": "rollup -c -w"
   },
   "keywords": [
+    "rollup",
     "rollup-plugin",
     "svg",
     "jsx",
     "preact",
     "react",
-    "components"
+    "components",
+    "vdom"
   ],
   "files": [
     "dist",
-    "rollup-plugin-svgi.mjs"
+    "rollup-plugin-mxn-svg.js"
   ],
   "author": "Kuzivakwashe <kuzivany@gmail.com>",
   "license": "MIT",

@@ -1,4 +1,6 @@
-import { createFilter } from 'rollup-pluginutils';
+'use strict';
+
+var rollupPluginutils = require('rollup-pluginutils');
 
 /**
  * Imports a SVG file and exports it as a module
@@ -10,7 +12,7 @@ function svgi ({ options, exclude, include = '**/*.svg' }) {
 		throw new Error("options.jsx is required");
 	}
 
-	const filter = createFilter(include, exclude);
+	const filter = rollupPluginutils.createFilter(include, exclude);
 
 	return {
 		name: 'svgi',
@@ -86,8 +88,6 @@ function svgi ({ options, exclude, include = '**/*.svg' }) {
 	};
 }
 
-export default svgi;
-
 /**
  * @typedef {Object} SVGiConfig
  * @property {string|string[]} [exclude] Minimatch pattern(s) to exclude
@@ -108,3 +108,5 @@ export default svgi;
  * @param {string} rawSVG The raw SVG file contents as a string
  * @returns {string|Promise<string>}
  */
+
+module.exports = svgi;
