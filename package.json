@@ -1,5 +1,5 @@
 {
-  "name": "rollup-plugin-svgi",
+  "name": "rollup-plugin-mxn-svg",
   "version": "0.2.0",
   "description": "Import SVG files as JSX components",
   "main": "dist/rollup-plugin-svgi.js",
@@ -25,6 +25,13 @@
   ],
   "author": "Kuzivakwashe <kuzivany@gmail.com>",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Ilya Zimnovich",
+      "email": "zimnovich@gmail.com",
+      "url": "https://zimnovich.com"
+    }
+  ],
   "dependencies": {
     "rollup-pluginutils": "^2.3.3"
   },
@@ -37,9 +44,9 @@
   "peerDependencies": {
     "rollup": ">=0.60.0 <2"
   },
-  "homepage": "https://github.com/kuzivany/rollup-plugin-svgi",
-  "repository": "https://github.com/kuzivany/rollup-plugin-svgi",
+  "homepage": "https://github.com/ZimNovich/rollup-plugin-mxn-svg",
+  "repository": "https://github.com/ZimNovich/rollup-plugin-mxn-svg",
   "bugs": {
-    "url": "https://github.com/kuzivany/rollup-plugin-svgi/issues"
+    "url": "https://github.com/ZimNovich/rollup-plugin-mxn-svg/issues"
   }
 }
