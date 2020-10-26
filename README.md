@@ -20,14 +20,14 @@ $ npm install --save-dev rollup-plugin-mxn-svg
 
 ```javascript
 // rollup.config.js
-import svgi from 'rollup-plugin-mxn-svg';
+import svg from 'rollup-plugin-mxn-svg';
 
 const config = {/* ... */};
 
 export default {
   entry: 'main.js',
   plugins: [
-    svgi(config)
+    svg(config)
   ]
 }
 ```
@@ -71,13 +71,13 @@ export default () => (
 
 ```javascript
 // rollup.config.js
-import svgi from 'rollup-plugin-mxn-svg';
+import svg from 'rollup-plugin-mxn-svg';
 
 export default {
   entry: 'main.js',
   // ...
   plugins: [
-    svgi({
+    svg({
       options: {
         jsx: 'preact', // Your chosen JSX library
       },
@@ -92,12 +92,12 @@ export default {
 
 ```javascript
 // rollup.config.js
-import svgi from 'rollup-plugin-mxn-svg';
+import svg from 'rollup-plugin-mxn-svg';
 
 export default {
   entry: 'main.js',
   plugins: [
-    svgi({
+    svg({
       options: {
         jsx: 'inferno-create-element',
         factory: 'createElement',
@@ -118,13 +118,13 @@ export default {
 
 ```js
 // rollup.config.js
-import svgi from 'rollup-plugin-mxn-svg';
+import svg  from 'rollup-plugin-mxn-svg';
 import SVGO from 'svgo';
 
 export default {
   entry: 'main.js',
   plugins: [
-    svgi({
+    svg({
       options: {
         jsx: 'react',
         clean: rawSVG => (
