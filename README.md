@@ -3,7 +3,7 @@
 [![npm@latest](https://badgen.net/npm/v/rollup-plugin-svgi)](https://www.npmjs.com/package/rollup-plugin-svgi)
 [![dependencies](https://david-dm.org/kuzivany/rollup-plugin-svgi.svg)](https://david-dm.org/kuzivany/rollup-plugin-svgi)
 
-Import SVG files as JSX components.
+Rollup plugin that imports SVG files as JSX components.
 
 ## Purpose
 
@@ -18,12 +18,6 @@ Get started by installing `rollup-plugin-mxn-svg` from your terminal with your p
 
 ```bash
 npm install rollup-plugin-mxn-svg --save-dev
-```
-
-### <a href="http://yarnpkg.com/" target="_blank">`yarn`</a>
-
-```bash
-yarn add rollup-plugin-svgi -D
 ```
 
 ## Usage
