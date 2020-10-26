@@ -1,4 +1,4 @@
-# rollup-plugin-svgi
+# rollup-plugin-mxn-svg
 
 [![npm@latest](https://badgen.net/npm/v/rollup-plugin-svgi)](https://www.npmjs.com/package/rollup-plugin-svgi)
 [![dependencies](https://david-dm.org/kuzivany/rollup-plugin-svgi.svg)](https://david-dm.org/kuzivany/rollup-plugin-svgi)
@@ -12,12 +12,12 @@ This is a <a href="http://rollupjs.org/" target="_blank">Rollup</a> plugin for `
 
 ## Installation
 
-Get started by installing `rollup-plugin-svgi` from your terminal with your preferred package manager:
+Get started by installing `rollup-plugin-mxn-svg` from your terminal with your preferred package manager:
 
 ### `npm`
 
 ```bash
-npm install rollup-plugin-svgi --save-dev
+npm install rollup-plugin-mxn-svg --save-dev
 ```
 
 ### <a href="http://yarnpkg.com/" target="_blank">`yarn`</a>
@@ -30,7 +30,7 @@ yarn add rollup-plugin-svgi -D
 
 ```javascript
 // rollup.config.js
-import svgi from 'rollup-plugin-svgi';
+import svgi from 'rollup-plugin-mxn-svg';
 
 const config = {/* ... */};
 
@@ -81,7 +81,7 @@ export default () => (
 
 ```javascript
 // rollup.config.js
-import svgi from 'rollup-plugin-svgi';
+import svgi from 'rollup-plugin-mxn-svg';
 
 export default {
   entry: 'main.js',
@@ -102,7 +102,7 @@ export default {
 
 ```javascript
 // rollup.config.js
-import svgi from 'rollup-plugin-svgi';
+import svgi from 'rollup-plugin-mxn-svg';
 
 export default {
   entry: 'main.js',
@@ -128,7 +128,7 @@ export default {
 
 ```js
 // rollup.config.js
-import svgi from 'rollup-plugin-svgi';
+import svgi from 'rollup-plugin-mxn-svg';
 import SVGO from 'svgo';
 
 export default {
