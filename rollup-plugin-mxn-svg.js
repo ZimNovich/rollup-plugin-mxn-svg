@@ -1,63 +1,119 @@
-'use strict';
+// Rollup-Plugin-MXN-SVG - Rollup plugin that imports SVG files as JSX components
+// Copyright (C) 2019 Kuzivakwashe
+// Copyright (C) 2020 Ilya Zimnovich <zimnovich@gmail.com>
+//
+// On Rollup plugin documentation see:
+// - https://github.com/rollup/rollup/blob/master/docs/05-plugin-development.md
 
-var rollupPluginutils = require('rollup-pluginutils');
+"use strict";
+const { resolve, sep } = require("path");
+const glob = require("@jsxtools/glob"); // Glob to RegExp
 
-/**
- * Imports a SVG file and exports it as a module
- * with `default` pointing to a functional component.
- * @param {SVGiConfig} config
- */
-function svgi ({ options, exclude, include = '**/*.svg' }) {
-	if ( !(options && options.jsx) ) {
-		throw new Error("options.jsx is required");
+// Helper functions inspired by rollup-pluginutils
+const ensureArray = function(thing) {
+    if ( Array.isArray(thing) ) return thing;
+    if ( thing == null || thing == undefined ) return [];
+    return [ thing ];
+}
+
+const createFilter = function(include, exclude, prepend)
+{
+    // Convert wildcards to arrays of glob RegExps
+    include = ensureArray(include).map(wildcard => prepend + wildcard ).map(wildcard => glob(wildcard) );
+    exclude = ensureArray(exclude).map(wildcard => prepend + wildcard ).map(wildcard => glob(wildcard) );
+
+	return function(id) {
+		if ( typeof id !== "string" ) return false;
+		if ( /\0/.test(id) ) return false;
+
+		let included = !include.length;
+		id = id.split(sep).join("/");
+
+		include.forEach( function(matcher) {
+			if ( matcher.test(id) ) included = true;
+		});
+
+		exclude.forEach( function(matcher) {
+			if ( matcher.test(id) ) included = false;
+		});
+
+		return included;
+	};
+}
+
+// A Rollup plugin is an object with one or more of the properties, build hooks,
+// and output generation hooks described below, and which follows our conventions.
+//
+// Plugins allow you to customise Rollup's behaviour by, for example, transpiling
+// code before bundling, or finding third-party modules in your node_modules folder. 
+
+module.exports = function(options) {
+    options = options || {};
+
+    // Setting default options
+    const defaults = {
+		jsx: "preact",
+		factory: "h", // preact.h
+		default: true,
+		prepend: "**/",
+		clean: function(rawSVG) {
+			return rawSVG
+			.replace(/\s*<\?xml[\s\S]+?\?>\s*/, "") // Remove XML declaration
+			.replace(/\s*<!DOCTYPE[\s\S]*?>\s*/i, "") // Remove DOCTYPE
+			.replace(/[a-z]+\:[a-z]+\s*=\s*"[\s\S]+?"/ig, "") // Remove namespaced attributes
+			.replace(/\s*<!\-\-[\s\S]*?\-\->\s*/ig, "") // Remove comments
+		}
+	};
+
+	if (options.jsx == "preact") {
+		options.factory = "h";
+		options.default = false;
+	}
+	else if (options.jsx == "react") {
+		options.factory = "React";
+		options.default = true;
+	}
+	
+    // Mixing mandatory and user provided arguments
+	options = Object.assign(defaults, options);
+	
+	// Ensure options.factory is configured correctly
+	if ( !options.factory ) {
+		throw new Error("options.factory couldn't be set from the provided options");
 	}
 
-	const filter = rollupPluginutils.createFilter(include, exclude);
+	// Ensure options.clean is configured correctly
+	if ( typeof options.clean !== "function"  ) {
+		throw new Error("options.clean should be a function");
+	}
+    
+    // Creating input files filter
+    const filter = createFilter(options.include, options.exclude, options.prepend);
 
-	return {
-		name: 'svgi',
-		/**
-		 * @param {string} svg 
-		 * @param {string} id 
-		 */
-		transform ( svg, id ) {
-			if ( !filter(id) ) return;
+    return {
+        name: "mxn-svg", // this name will show up in warnings and errors
+        // To interact with the build process, your plugin object includes 'hooks'.
+		// Hooks are functions which are called at various stages of the build. 
+		//
+        // If a plugin transforms source code, it should generate a sourcemap
+        // automatically, unless there's a specific sourceMap: false option.
+        // If the transformation does not move code, you can preserve existing
+        // sourcemaps by returning null
+        //
+        // Transformer plugins (i.e. those that return a transform function for
+        // e.g. transpiling non-JS files) should support options.include and
+        // options.exclude, both of which can be a minimatch pattern or an array
+        // of minimatch patterns. If options.include is omitted or of zero length,
+        // files should be included by default; otherwise they should only be
+        // included if the ID matches one of the patterns.
+        //
+        transform: function(svg, id) {
+            // Check if file with "id" path should be included or excluded
+			if ( !filter(id) ) return null;
 
-			let library;
-			let cleanedSVG;
-			let factory = options.factory || null;
-			let isDefault = typeof options.default === "boolean"?
-				options.default:
-				true
-			;
-			let clean = options.clean || (
-				rawSVG => (rawSVG
-					.replace(/\s*<\?xml[\s\S]+?\?>\s*/, "") // Remove XML declaration
-					.replace(/\s*<!DOCTYPE[\s\S]*?>\s*/i, "") // Remove DOCTYPE
-					.replace(/[a-z]+\:[a-z]+\s*=\s*"[\s\S]+?"/ig, "") // Remove namespaced attributes
-					.replace(/\s*<!\-\-[\s\S]*?\-\->\s*/ig, "") // Remove comments
-				)
-			);
-
-			switch ( options.jsx ) {
-				case "preact":
-					factory = "h";
-					isDefault = false;
-				break;
-					
-				case "react":
-					factory = "React";
-					isDefault = true;
-				break;
-			}
-
-			if ( !factory ) {
-				throw new Error("options.factory couldn't be set from the provided options");
-			}
-
-			factory = isDefault? factory: `{ ${factory} }`;
-			library = `import ${factory} from '${options.jsx}';`;
-			cleanedSVG = clean(svg);
+			let factory = (options.default) ? options.factory: `{ ${options.factory} }`;
+			let library = `import ${factory} from '${options.jsx}';`;
+			let cleanedSVG = options.clean(svg);
 
 			if ( typeof cleanedSVG !== "string" ) {
 				// Check whether clean returned a Promise
@@ -66,9 +122,10 @@ function svgi ({ options, exclude, include = '**/*.svg' }) {
 				);
 
 				if ( !isPromise ) {
-					throw new Error('options.clean did not return a string or Promise<string>');
+					throw new Error("options.clean did not return a string or Promise<string>");
 				}
-			} else {
+			}
+			else {
 				cleanedSVG = Promise.resolve(cleanedSVG);
 			}
 
@@ -81,11 +138,11 @@ function svgi ({ options, exclude, include = '**/*.svg' }) {
 						`${library}\n` +
 						`export default ( props ) => (${cleanedSVG});`
 					),
-					map: { mappings: '' }
+					map: { mappings: "" }
 				};
-			})
-		}
-	};
+			});
+        }
+    }
 }
 
 /**
@@ -108,5 +165,3 @@ function svgi ({ options, exclude, include = '**/*.svg' }) {
  * @param {string} rawSVG The raw SVG file contents as a string
  * @returns {string|Promise<string>}
  */
-
-module.exports = svgi;
