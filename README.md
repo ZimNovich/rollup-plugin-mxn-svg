@@ -22,6 +22,43 @@ $ npm install --save-dev rollup-plugin-mxn-svg
 
 ## Usage
 
+_Note. Use this plugin **before** any others such as node-resolve or commonjs, so they do not alter the output._
+
+Suppose an entry file containing the snippet below exists at `src/entry.js`, and attempts to load `src/logo.svg` from memory:
+
+```js
+// src/entry.js
+import Logo from './logo.svg';
+
+console.log(Logo);
+```
+
+Create a `rollup.config.js` [configuration file](https://www.rollupjs.org/guide/en/#configuration-files) and import the plugin:
+
+```js
+import virtual from '@rollup/plugin-virtual';
+
+export default {
+  entry: 'src/entry.js',
+  // ...
+  plugins: [
+    virtual({
+      batman: `export default 'na na na na na'`,
+      'src/robin.js': `export default 'batmannnnn'`
+    })
+  ]
+};
+```
+
+Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#command-line-reference) or the [API](https://www.rollupjs.org/guide/en/#javascript-api).
+
+## Options
+
+This plugin has no formal options. The lone parameter for this plugin is an `Object` containing properties that correspond to a `String` containing the virtual module's code.
+
+## Using the Plugin for Bundle Input
+
+
 ```javascript
 // rollup.config.js
 import rollupMxnSvg from "rollup-plugin-mxn-svg";
