@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-mxn-svg",
-  "version": "0.2.0",
+  "version": "0.8.0",
   "description": "Rollup plugin that imports SVG files as JSX components",
   "main": "rollup-plugin-mxn-svg.js",
   "scripts": {
