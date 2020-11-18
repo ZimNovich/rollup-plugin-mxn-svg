@@ -36,17 +36,29 @@ console.log(Logo);
 Create a `rollup.config.js` [configuration file](https://www.rollupjs.org/guide/en/#configuration-files) and import the plugin:
 
 ```js
-import virtual from '@rollup/plugin-virtual';
+// rollup.config.js
+import rollupMxnSvg from "rollup-plugin-mxn-svg";
+import rollupMxnJsx from "rollup-plugin-mxn-jsx";
+// ... other imports, etc ...
 
 export default {
-  entry: 'src/entry.js',
-  // ...
-  plugins: [
-    virtual({
-      batman: `export default 'na na na na na'`,
-      'src/robin.js': `export default 'batmannnnn'`
-    })
-  ]
+	input: "src/index.js",
+	// ...
+	output: {
+		file: "bundle/bundle.js",
+		format: "iife"
+	},
+	plugins: [
+		rollupMxnSvg({
+			imports: "import {h} from \"preact\";",
+			include: "*.svg"
+		}),
+		rollupMxnJsx({
+			factory: "h",
+			include: ["*.js", "*.jsx", "*.svg"]
+		}),
+		// ... other plugins, etc ...
+	]
 };
 ```
 
