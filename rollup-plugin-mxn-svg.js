@@ -50,13 +50,9 @@ const createFilter = function(include, exclude, prepend)
 // code before bundling, or finding third-party modules in your node_modules folder. 
 
 module.exports = function(options) {
-    options = options || {};
-
     // Setting default options
     const defaults = {
-		library: "preact",
-		factory: "h", // preact.h
-		default: false,
+        imports: "import {h} from \"preact\";",
 		prepend: "**/",
 		clean: function(rawSVG) {
 			return rawSVG
@@ -67,33 +63,11 @@ module.exports = function(options) {
 		}
 	};
 
-    // Mixing mandatory and user provided arguments
+	// Mixing mandatory and user provided arguments
+	// Note: Object.assign() does not throw on null or undefined sources
 	options = Object.assign(defaults, options);
 
-	if (options.library == "preact") {
-		options.factory = "h";
-		options.default = false;
-	}
-	else if (options.library == "react") {
-		options.factory = "React";
-		options.default = true;
-	}
-	else if (options.library == "mithril") {
-		options.factory = "m";
-		options.default = true;
-	}
-
-	console.log("SVG params:");
-	console.log(options.library);
-	console.log(options.default);
-	
-	let factory = (options.default) ? options.factory : `{ ${options.factory} }`;
-	let library = `import ${factory} from '${options.library}';`;
-
-	// Ensure options.factory is configured correctly
-	if ( !options.factory ) {
-		throw new Error("options.factory couldn't be set from the provided options");
-	}
+	let library = ensureArray(options.imports).join("\n");
 
 	// Ensure options.clean is configured correctly
 	if ( typeof options.clean !== "function"  ) {
@@ -155,24 +129,3 @@ module.exports = function(options) {
         }
     }
 }
-
-/**
- * @typedef {Object} SVGiConfig
- * @property {string|string[]} [exclude] Minimatch pattern(s) to exclude
- * @property {string|string[]} [include='**\/*.svg'] Minimatch pattern(s) to include
- * @property {SVGiOptions} options Map of options
- */
-
-/**
- * @typedef {Object} SVGiOptions
- * @property {"preact"|"react"|string} jsx `"preact"`, `"react"` or your chosen JSX library
- * @property {string} [factory] The variable/ function being imported
- * @property {boolean} [default] Whether the import is a default or not. Defaults to `true`
- * @property {SVGiCleanFunction} [clean] A function that prepares the SVG output for use in JSX
- */
-
-/**
- * @callback SVGiCleanFunction
- * @param {string} rawSVG The raw SVG file contents as a string
- * @returns {string|Promise<string>}
- */
