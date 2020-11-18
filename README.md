@@ -69,8 +69,8 @@ Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#comma
 
 This plugin has the following configuration options:
 
-| Property    | Description    | Default    |
-|-------------|----------------|------------|
+| Property    | Description    | Default      |
+|-------------|----------------|--------------|
 | `imports`   | A string or array with `import` statements that will be inserted at the beginning of the resulting file. | `"import {h} from \"preact\";"` |
 | `include`   | This property specifies which files to include. It is a single [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)), or an array of them. | `"*.svg"` |
 | `exclude`   | This property is the same as `include`, except it specifies which files to exclude.<br/>It is a single [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)), or an array of them. | `undefined` |
