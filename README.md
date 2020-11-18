@@ -72,7 +72,7 @@ This plugin has the following options:
 |-------------|----------------|------------|
 | `imports`   | The options object | `undefined` |
 This can be a single minimatch glob pattern, or an array of them. Default is ./**.
-| `include` | This can be a single minimatch glob pattern, or an array of them.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `"**/*.svg"` |
+| `include` | A single glob pattern, or an array of them. It specifies which files to include.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `"**/*.svg"` |
 | `exclude` | <a href="https://github.com/isaacs/minimatch" target="_blank">Minimatch pattern(s)</a> to exclude.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `undefined` |
 
 
