@@ -76,120 +76,8 @@ This plugin has the following configuration options:
 | `prepend`   | The string to prepend to `include` and `exclude` entries | `"**/"` |
 | `clean`     | The function used to clean up / prepare an SVG file for inlining. It removes the `DOCTYPE`, XML declaration, comments and namespaced attributes and has a `(rawSVG) => string` or `(rawSVG) => Promise<string>` function signature. | `function` |
 
-## Usage
 
-We suggest you to load the module via `require` until the stabilization of ES modules in Node.js:
-```javascript
-const transform = require("mxn-jsx-ast-transformer");
-```
-
-Now you can transform ("desugar") all JSX elements into JS calls as follows:
-```javascript
-let ast = transform(jsx_ast[, options]);
-```
-
-Where
- - `jsx_ast` {Object} - ESTree-compilant JSX AST to transform to regular JS AST
- - `options` {Object} - options for JSX ⇒ JS transformation
-
-The default values for the `options` object are shown below:
-```javascript
-{
-    factory: "h",         // factory function to use, e.g. `h`, `m`, `React.createElement`
-    quotePropNames: true  // put property names into quotes
-}
-```
-
-Below is an advanced usage example:
-
-```javascript
-let ast = transform(jsx_ast, { factory: "React.createElement", quotePropNames: false });
-```
-
-Please note that this tool only converts JSX AST into regular ES5-compliant JavaScript AST. If you want to transpile your source code, check out [mxn-jsx-transpiler](https://github.com/ZimNovich/mxn-jsx-transpiler) or use a code like:
-
-```javascript
-// Acorn & Astring
-const acorn = require("acorn");
-const acornJsx = require("acorn-jsx");
-const { generate } = require("astring");
-
-// MXN JSX AST Transformer
-const transform = require("mxn-jsx-ast-transformer");
-
-// Create parser
-let parser = acorn.Parser.extend(acornJsx({
-    allowNamespaces: false
-}) );
-
-let code = 'let a = <Greeting firstName="Maximilian" lastName="Pierpont" age={1 + 2 + 3 + 4} />;';
-
-let ast = parser.parse(code, {
-    ecmaVersion: 2020,
-    sourceType: "module",
-    locations: false,
-    plugins: { jsx: true }
-});
-
-// Transform AST
-let ast_new = transform(ast, { factory: "h" });
-
-// Generate code
-let transformedCode = generate(ast_new, {
-    indent: "    ",
-    lineEnd: "\n",
-    comments: false
-});
-```
-
-## License
-
-This module is released under the MIT license.
-
-## Related
-
-- [mxn-jsx-transpiler](https://github.com/ZimNovich/mxn-jsx-transpiler) - Transpiles JSX to regular JavaScript
-- [rollup-plugin-mxn-jsx](https://github.com/ZimNovich/rollup-plugin-mxn-jsx) - Rollup JSX plugin that transpiles JSX into JavaScript
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Configuration
-
-The `config` object passed to the plugin is composed of the following properties:
-
-| Property | Description | Default |
-| -------- | ----------- | ------- |
-| `options` | The options object | `undefined` |
-| <code id="jsx">options.jsx</code> | The JSX library or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Syntax" target="_blank">module name</a> to use e.g. `"preact"` or `"react"` (**required**) | `undefined` |
-| <code id="factory">options.factory</code> | The JSX <a href="https://jasonformat.com/wtf-is-jsx/#thepragma" target="_blank">pragma</a>&mdash;the function used for compiling each JSX node **e.g.** `preact.h` or `React.createElement` | `undefined` |
-| <code id="default">options.default</code> | Whether or not the [`options.factory`](#factory) is the `default` export of the provided [`options.jsx`](#jsx) library.<br/>If `false`, the provided [`options.jsx`](#jsx) will be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Description" target="_blank">named `export`</a> | `true` |
-| <code id="clean">options.clean</code> | The function used to clean up/ prepare the SVG for inlining. It removes the `DOCTYPE`, XML declaration, comments and namespaced attributes and has a `(rawSVG) => string` or `(rawSVG) => Promise<string>` function signature | `function` |
-| `exclude` | <a href="https://github.com/isaacs/minimatch" target="_blank">Minimatch pattern(s)</a> to exclude.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `undefined` |
-| `include` | <a href="https://github.com/isaacs/minimatch" target="_blank">Minimatch pattern(s)</a> to include.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `"**/*.svg"` |
-
-### Examples
-
-Here are some complete `rollup.config.js` and starter project examples for:
-
- - [Preact](https://github.com/kuzivany/simple-preact-rollup)
- - [React, Inferno](https://github.com/kuzivany/simple-rollup-starter)
-
-#### Basic example
+## Examples
 
 ```javascript
 // main.js
@@ -222,9 +110,7 @@ export default {
 }
 ```
 
-#### Advanced examples
-
-##### Specifying a library
+### Specifying a library
 
 ```javascript
 // rollup.config.js
@@ -244,9 +130,7 @@ export default {
 }
 ```
 
-**[See full _library_ example here](https://github.com/kuzivany/simple-rollup-starters/tree/master/inferno)**
-
-##### Using SVGO
+### Using SVGO
 
 [`options.clean`](#clean) allows you to specify a custom function to remove any unnecessary elements in your SVG files.
 
@@ -283,7 +167,7 @@ export default {
 
 ## Internals
 
-SVG files are `import`ed as functional components which accept `props`.
+SVG files are imported as functional components which accept `props`.
 An example `logo.svg` file:
 
 ```xml
