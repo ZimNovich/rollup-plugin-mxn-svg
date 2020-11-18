@@ -11,7 +11,7 @@ Rollup plugin that imports SVG files as JSX components.
 
 ## Purpose
 
-This is a <a href="http://rollupjs.org/" target="_blank">Rollup</a> plugin for importing SVG as components in <a href="http://preactjs.com/" target="_blank">Preact</a>, <a href="https://reactjs.org/" target="_blank">React</a> and other [libraries](#examples).
+This is a <a href="http://rollupjs.org/" target="_blank">Rollup</a> plugin for importing SVG as JSX components in <a href="http://preactjs.com/" target="_blank">Preact</a>, <a href="https://reactjs.org/" target="_blank">React</a> and other [libraries](#examples).
 <!-- inlining SVG elements as components -->
 
 ## Install
