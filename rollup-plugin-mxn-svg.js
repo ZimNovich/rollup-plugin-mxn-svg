@@ -22,25 +22,25 @@ const createFilter = function(include, exclude, prepend)
     include = ensureArray(include).map(wildcard => prepend + wildcard ).map(wildcard => glob(wildcard) );
     exclude = ensureArray(exclude).map(wildcard => prepend + wildcard ).map(wildcard => glob(wildcard) );
 
-	return function(id) {
-		if ( typeof id !== "string" ) return false;
-		if ( /\0/.test(id) ) return false;
-		id = id.split(sep).join("/");
+    return function(id) {
+        if ( typeof id !== "string" ) return false;
+        if ( /\0/.test(id) ) return false;
+        id = id.split(sep).join("/");
 
-		// If options.include is omitted or of zero length, files should be included by default;
-		// otherwise they should only be included if the ID matches one of the patterns.
-		let included = !include.length;
+        // If options.include is omitted or of zero length, files should be included by default;
+        // otherwise they should only be included if the ID matches one of the patterns.
+        let included = !include.length;
 
-		include.forEach( function(matcher) {
-			if ( matcher.test(id) ) included = true;
-		});
+        include.forEach( function(matcher) {
+            if ( matcher.test(id) ) included = true;
+        });
 
-		exclude.forEach( function(matcher) {
-			if ( matcher.test(id) ) included = false;
-		});
+        exclude.forEach( function(matcher) {
+            if ( matcher.test(id) ) included = false;
+        });
 
-		return included;
-	};
+        return included;
+    };
 }
 
 // A Rollup plugin is an object with one or more of the properties, build hooks,
@@ -53,14 +53,14 @@ module.exports = function(options) {
     // Setting default options
     const defaults = {
         imports: "import {h} from \"preact\";",
-		prepend: "**/",
-		clean: function(rawSVG) {
-			return rawSVG
-			.replace(/\s*<\?xml[\s\S]+?\?>\s*/, "") // Remove XML declaration
-			.replace(/\s*<!DOCTYPE[\s\S]*?>\s*/i, "") // Remove DOCTYPE
-			.replace(/[a-z]+\:[a-z]+\s*=\s*"[\s\S]+?"/ig, "") // Remove namespaced attributes
-			.replace(/\s*<!\-\-[\s\S]*?\-\->\s*/ig, "") // Remove comments
-		}
+        prepend: "**/",
+        clean: function(rawSVG) {
+            return rawSVG
+            .replace(/\s*<\?xml[\s\S]+?\?>\s*/, "") // Remove XML declaration
+            .replace(/\s*<!DOCTYPE[\s\S]*?>\s*/i, "") // Remove DOCTYPE
+            .replace(/[a-z]+\:[a-z]+\s*=\s*"[\s\S]+?"/ig, "") // Remove namespaced attributes
+            .replace(/\s*<!\-\-[\s\S]*?\-\->\s*/ig, "") // Remove comments
+        }
 	};
 
 	// Mixing mandatory and user provided arguments
@@ -96,36 +96,36 @@ module.exports = function(options) {
         //
         transform: function(svg, id) {
             // Check if file with "id" path should be included or excluded
-			if ( !filter(id) ) return null;
+            if ( !filter(id) ) return null;
 
-			let cleanedSVG = options.clean(svg);
+            let cleanedSVG = options.clean(svg);
 
-			if ( typeof cleanedSVG !== "string" ) {
-				// Check whether clean returned a Promise
-				let isPromise = (
-					typeof cleanedSVG === "object" && cleanedSVG.then
-				);
+            if ( typeof cleanedSVG !== "string" ) {
+                // Check whether clean returned a Promise
+                let isPromise = (
+                    typeof cleanedSVG === "object" && cleanedSVG.then
+                );
 
-				if ( !isPromise ) {
-					throw new Error("options.clean did not return a string or Promise<string>");
-				}
-			}
-			else {
-				cleanedSVG = Promise.resolve(cleanedSVG);
-			}
+                if ( !isPromise ) {
+                    throw new Error("options.clean did not return a string or Promise<string>");
+                }
+            }
+            else {
+                cleanedSVG = Promise.resolve(cleanedSVG);
+            }
 
-			return cleanedSVG.then(cleanedSVG => {
-				// Add props:
-				cleanedSVG = cleanedSVG.replace(/<svg([\s\S]*?)>/i, "<svg$1 {...props}>");
-	
-				return {
-					code: (
-						`${library}\n` +
-						`export default ( props ) => (${cleanedSVG});`
-					),
-					map: { mappings: "" }
-				};
-			});
+            return cleanedSVG.then(cleanedSVG => {
+                // Add props:
+                cleanedSVG = cleanedSVG.replace(/<svg([\s\S]*?)>/i, "<svg$1 {...props}>");
+    
+                return {
+                    code: (
+                        `${library}\n` +
+                        `export default ( props ) => (${cleanedSVG});`
+                    ),
+                    map: { mappings: "" }
+                };
+            });
         }
     }
 }
