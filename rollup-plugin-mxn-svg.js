@@ -25,9 +25,11 @@ const createFilter = function(include, exclude, prepend)
 	return function(id) {
 		if ( typeof id !== "string" ) return false;
 		if ( /\0/.test(id) ) return false;
-
-		let included = !include.length;
 		id = id.split(sep).join("/");
+
+		// If options.include is omitted or of zero length, files should be included by default;
+		// otherwise they should only be included if the ID matches one of the patterns.
+		let included = !include.length;
 
 		include.forEach( function(matcher) {
 			if ( matcher.test(id) ) included = true;
@@ -52,9 +54,9 @@ module.exports = function(options) {
 
     // Setting default options
     const defaults = {
-		jsx: "preact",
+		library: "preact",
 		factory: "h", // preact.h
-		default: true,
+		default: false,
 		prepend: "**/",
 		clean: function(rawSVG) {
 			return rawSVG
@@ -65,18 +67,29 @@ module.exports = function(options) {
 		}
 	};
 
-	if (options.jsx == "preact") {
+    // Mixing mandatory and user provided arguments
+	options = Object.assign(defaults, options);
+
+	if (options.library == "preact") {
 		options.factory = "h";
 		options.default = false;
 	}
-	else if (options.jsx == "react") {
+	else if (options.library == "react") {
 		options.factory = "React";
 		options.default = true;
 	}
+	else if (options.library == "mithril") {
+		options.factory = "m";
+		options.default = true;
+	}
+
+	console.log("SVG params:");
+	console.log(options.library);
+	console.log(options.default);
 	
-    // Mixing mandatory and user provided arguments
-	options = Object.assign(defaults, options);
-	
+	let factory = (options.default) ? options.factory : `{ ${options.factory} }`;
+	let library = `import ${factory} from '${options.library}';`;
+
 	// Ensure options.factory is configured correctly
 	if ( !options.factory ) {
 		throw new Error("options.factory couldn't be set from the provided options");
@@ -111,8 +124,6 @@ module.exports = function(options) {
             // Check if file with "id" path should be included or excluded
 			if ( !filter(id) ) return null;
 
-			let factory = (options.default) ? options.factory: `{ ${options.factory} }`;
-			let library = `import ${factory} from '${options.jsx}';`;
 			let cleanedSVG = options.clean(svg);
 
 			if ( typeof cleanedSVG !== "string" ) {
