@@ -9,6 +9,33 @@ Rollup plugin that imports SVG files as JSX components.
 - ~5.5kb size
 - ~2.5kb minified + gzipped
 
+## Purpose
+
+This is a <a href="http://rollupjs.org/" target="_blank">Rollup</a> plugin for importing SVG as components in <a href="http://preactjs.com/" target="_blank">Preact</a>, <a href="https://reactjs.org/" target="_blank">React</a> and other [libraries](#examples).
+<!-- inlining SVG elements as components -->
+
+## Install
+
+```
+$ npm install --save-dev rollup-plugin-mxn-svg
+```
+
+## Usage
+
+```javascript
+// rollup.config.js
+import svg from 'rollup-plugin-mxn-svg';
+
+const config = {/* ... */};
+
+export default {
+  entry: 'main.js',
+  plugins: [
+    svg(config)
+  ]
+}
+```
+
 ## Usage
 
 We suggest you to load the module via `require` until the stabilization of ES modules in Node.js:
@@ -99,37 +126,7 @@ This module is released under the MIT license.
 
 
 
-[![npm@latest](https://badgen.net/npm/v/rollup-plugin-svgi)](https://www.npmjs.com/package/rollup-plugin-svgi)
-[![dependencies](https://david-dm.org/kuzivany/rollup-plugin-svgi.svg)](https://david-dm.org/kuzivany/rollup-plugin-svgi)
 
-Rollup plugin that imports SVG files as JSX components.
-
-## Purpose
-
-This is a <a href="http://rollupjs.org/" target="_blank">Rollup</a> plugin for `import`ing SVG as components in <a href="http://preactjs.com/" target="_blank">Preact</a>, <a href="https://reactjs.org/" target="_blank">React</a> and other [libraries](#examples).
-<!-- inlining SVG elements as components -->
-
-## Install
-
-```
-$ npm install --save-dev rollup-plugin-mxn-svg
-```
-
-## Usage
-
-```javascript
-// rollup.config.js
-import svg from 'rollup-plugin-mxn-svg';
-
-const config = {/* ... */};
-
-export default {
-  entry: 'main.js',
-  plugins: [
-    svg(config)
-  ]
-}
-```
 
 ### Configuration
 
