@@ -73,7 +73,7 @@ export default {
 			]
 		})
 	]
-
+};
 
 const config = {/* ... */};
 
