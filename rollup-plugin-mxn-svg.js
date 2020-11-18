@@ -6,7 +6,7 @@
 // - https://github.com/rollup/rollup/blob/master/docs/05-plugin-development.md
 
 "use strict";
-const { resolve, sep } = require("path");
+const { sep } = require("path");
 const glob = require("@jsxtools/glob"); // Glob to RegExp
 
 // Helper functions inspired by rollup-pluginutils
