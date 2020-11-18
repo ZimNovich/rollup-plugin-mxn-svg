@@ -24,7 +24,56 @@ $ npm install --save-dev rollup-plugin-mxn-svg
 
 ```javascript
 // rollup.config.js
-import svg from 'rollup-plugin-mxn-svg';
+import rollupMxnSvg from "rollup-plugin-mxn-svg";
+
+export default {
+	input: "src/index.js",
+	external: [
+		"lodash",
+		"preact",
+		"prop-types"
+	],
+	output: {
+		file: "bundle/bundle.js",
+		format: "iife", //iife, umd, cjs
+		name: "App",
+		sourcemap: false,
+		externalLiveBindings: false,
+		globals: {
+			"lodash": "_",
+			"preact": "preact",
+			"prop-types": "PropTypes"
+		}
+	},
+	plugins: [
+		rollupMxnSvg({
+			imports: ["import {h} from \"preact\";", "import {h2} from \"preact2\";"],
+			include: "*.svg"
+		}),
+		rollupMxnJsx({
+			factory: "h",
+			include: ["*.js", "*.jsx", "*.svg"]//,
+			//exclude: "node_modules/**"
+		}),
+		rollupNodeResolve({
+                        extensions: [".js", ".jsx"],
+			jsnext: true,
+			main: true
+		}),
+		rollupCommonJS({
+                        ignoreGlobal: true,
+			include: "node_modules/**"
+		}),
+		rollupCopyAssets({
+			assets: [
+				// You can include files & directories
+				"src/index.html",
+				"src/logo.svg",
+				"src/preact"
+			]
+		})
+	]
+
 
 const config = {/* ... */};
 
