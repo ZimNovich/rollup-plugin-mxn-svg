@@ -1,47 +1,47 @@
 {
-  "name": "rollup-plugin-mxn-svg",
-  "version": "0.8.0",
-  "description": "Rollup plugin that imports SVG files as JSX components",
-  "main": "rollup-plugin-mxn-svg.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "rollup",
-    "rollup-plugin",
-    "svg",
-    "transform",
-    "jsx",
-    "javascript"
-    "preact",
-    "react",
-    "components",
-    "vdom"
-  ],
-  "files": [
-    "rollup-plugin-mxn-svg.js"
-  ],
-  "author": "Kuzivakwashe <kuzivany@gmail.com>",
-  "license": "MIT",
-  "contributors": [
-    {
-      "name": "Ilya Zimnovich",
-      "email": "zimnovich@gmail.com",
-      "url": "https://zimnovich.com"
+    "name": "rollup-plugin-mxn-svg",
+    "version": "0.8.0",
+    "description": "Rollup plugin that imports SVG files as JSX components",
+    "main": "rollup-plugin-mxn-svg.js",
+    "keywords": [
+        "rollup",
+        "rollup-plugin",
+        "svg",
+        "transform",
+        "jsx",
+        "javascript",
+        "preact",
+        "react",
+        "components",
+        "vdom"
+    ],
+    "files": [
+        "rollup-plugin-mxn-svg.js"
+    ],
+    "author": "Kuzivakwashe <kuzivany@gmail.com>",
+    "license": "MIT",
+    "contributors": [
+        {
+        "name": "Ilya Zimnovich",
+        "email": "zimnovich@gmail.com",
+        "url": "https://zimnovich.com"
+        }
+    ],
+    "dependencies": {
+        "@jsxtools/glob": "^1.0.0"
+    },
+    "devDependencies": {
+        "rollup": "^1.0.0"
+    },
+    "peerDependencies": {
+        "rollup": ">=0.60.0 <2"
+    },
+    "homepage": "https://github.com/ZimNovich/rollup-plugin-mxn-svg",
+    "repository": "https://github.com/ZimNovich/rollup-plugin-mxn-svg",
+    "bugs": {
+        "url": "https://github.com/ZimNovich/rollup-plugin-mxn-svg/issues"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
     }
-  ],
-  "dependencies": {
-    "@jsxtools/glob": "^1.0.0"
-  },
-  "devDependencies": {
-    "rollup": "^1.0.0"
-  },
-  "peerDependencies": {
-    "rollup": ">=0.60.0 <2"
-  },
-  "homepage": "https://github.com/ZimNovich/rollup-plugin-mxn-svg",
-  "repository": "https://github.com/ZimNovich/rollup-plugin-mxn-svg",
-  "bugs": {
-    "url": "https://github.com/ZimNovich/rollup-plugin-mxn-svg/issues"
-  }
 }
