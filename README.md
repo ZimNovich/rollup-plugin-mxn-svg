@@ -77,13 +77,12 @@ This plugin has the following configuration options:
 | `prepend`   | The string to prepend to `include` and `exclude` entries | `"**/"` |
 | `clean`     | The function used to clean up & prepare an SVG file for inlining. It removes the `DOCTYPE`, XML declaration, comments and namespaced attributes and has a `(rawSVG) => string` or `(rawSVG) => Promise<string>` function signature. | `function` |
 
-
 ## Examples
 
-```javascript
-// main.js
-import { h } from 'preact'; // OR import React from 'react';
-import Logo from 'path/to/logo.svg';
+```js
+// src/main.js
+import { h } from "preact"; // OR import React from "react";
+import Logo from "path/to/logo.svg";
 
 export default () => (
   <div class="App">
@@ -94,41 +93,52 @@ export default () => (
 );
 ```
 
-```javascript
+```js
 // rollup.config.js
-import svg from 'rollup-plugin-mxn-svg';
+import rollupMxnSvg from "rollup-plugin-mxn-svg";
+import rollupMxnJsx from "rollup-plugin-mxn-jsx";
+// ... other imports, etc ...
 
 export default {
-  entry: 'main.js',
-  // ...
-  plugins: [
-    svg({
-      options: {
-        jsx: 'preact', // Your chosen JSX library
-      },
-    }),
-  ]
-}
+	input: "src/main.js",
+	// ...
+	plugins: [
+		rollupMxnSvg({
+			imports: "import {h} from \"preact\";",
+			include: "*.svg"
+		}),
+		rollupMxnJsx({
+			factory: "h",
+			include: ["*.js", "*.jsx", "*.svg"]
+		}),
+		// ... other plugins, etc ...
+	]
+};
 ```
 
 ### Specifying a library
 
-```javascript
+```js
 // rollup.config.js
-import svg from 'rollup-plugin-mxn-svg';
+import rollupMxnSvg from "rollup-plugin-mxn-svg";
+import rollupMxnJsx from "rollup-plugin-mxn-jsx";
+// ... other imports, etc ...
 
 export default {
-  entry: 'main.js',
-  plugins: [
-    svg({
-      options: {
-        jsx: 'inferno-create-element',
-        factory: 'createElement',
-        'default': false // import { createElement } from 'inferno-create-element';
-      },
-    }),
-  ]
-}
+	input: "src/main.js",
+	// ...
+	plugins: [
+		rollupMxnSvg({
+			imports: "import {createElement} from \"inferno-create-element\";",
+			include: "*.svg"
+		}),
+		rollupMxnJsx({
+			factory: "createElement",
+			include: ["*.js", "*.jsx", "*.svg"]
+		}),
+		// ... other plugins, etc ...
+	]
+};
 ```
 
 ### Using SVGO
@@ -139,29 +149,36 @@ export default {
 
 ```js
 // rollup.config.js
-import svg  from 'rollup-plugin-mxn-svg';
-import SVGO from 'svgo';
+import rollupMxnSvg from "rollup-plugin-mxn-svg";
+import rollupMxnJsx from "rollup-plugin-mxn-jsx";
+import SVGO from "svgo";
+// ... other imports, etc ...
 
 export default {
-  entry: 'main.js',
-  plugins: [
-    svg({
-      options: {
-        jsx: 'react',
-        clean: rawSVG => (
-          new SVGO({
-            plugins: [
-              {removeDoctype: true},
-              {removeXMLNS: true},
-              {removeComments: true},
-              {removeViewBox: false},
-            ]
-          }).optimize(rawSVG).then(optzSvg => optzSvg.data)
-        )
-      }
-    })
-  ]
-}
+	input: "src/main.js",
+	// ...
+	plugins: [
+		rollupMxnSvg({
+			imports: "import {h} from \"preact\";",
+			include: "*.svg",
+			clean: rawSVG => (
+				new SVGO({
+					plugins: [
+						{removeDoctype: true},
+						{removeXMLNS: true},
+						{removeComments: true},
+						{removeViewBox: false},
+					]
+				}).optimize(rawSVG).then(optzSvg => optzSvg.data)
+			)
+		}),
+		rollupMxnJsx({
+			factory: "h",
+			include: ["*.js", "*.jsx", "*.svg"]
+		}),
+		// ... other plugins, etc ...
+	]
+};
 ```
 
 **[Full _SVGO_ example here](https://github.com/kuzivany/simple-rollup-starters/tree/master/react)**
