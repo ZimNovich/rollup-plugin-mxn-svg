@@ -68,8 +68,8 @@ Then call `rollup` either via the [CLI](https://www.rollupjs.org/guide/en/#comma
 
 This plugin has the following options:
 
-| Property | Description | Default |
-| -------- | ----------- | ------- |
+| Property  | Description  | Default  |
+| --------- | ------------ | -------- |
 | `options` | The options object | `undefined` |
 | <code id="jsx">options.jsx</code> | The JSX library or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Syntax" target="_blank">module name</a> to use e.g. `"preact"` or `"react"` (**required**) | `undefined` |
 | <code id="factory">options.factory</code> | The JSX <a href="https://jasonformat.com/wtf-is-jsx/#thepragma" target="_blank">pragma</a>&mdash;the function used for compiling each JSX node **e.g.** `preact.h` or `React.createElement` | `undefined` |
