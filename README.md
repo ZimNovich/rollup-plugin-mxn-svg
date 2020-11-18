@@ -71,9 +71,9 @@ This plugin has the following options:
 | Property    | Description    | Default    |
 |-------------|----------------|------------|
 | `imports`   | The options object | `undefined` |
-| `include`   | This property specifies which files to include. It is a single glob pattern, or an array of them.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `"**/*.svg"` |
+| `include`   | This property specifies which files to include. It is a single glob pattern, or an array of them.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `"*.svg"` |
 | `exclude`   | This property is the same as `include`, except it specifies which files to exclude.<br/>It is a single glob pattern, or an array of them.<br/>More at <a href="https://rollupjs.org/guide/en#transformers" target="_blank">rollupjs.org</a>. | `undefined` |
-| `prepend`   | The string to prepend to `include` and `exclude` entries | "**/" |
+| `prepend`   | The string to prepend to `include` and `exclude` entries | `"**/"` |
 
 
 
