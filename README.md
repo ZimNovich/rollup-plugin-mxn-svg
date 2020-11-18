@@ -70,7 +70,7 @@ This plugin has the following configuration options:
 
 | Property    | Description    | Default    |
 |-------------|----------------|------------|
-| `imports`   | The options object | `undefined` |
+| `imports`   | The options object | `"import {h} from \"preact\";"` |
 | `include`   | This property specifies which files to include. It is a single [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)), or an array of them. | `"*.svg"` |
 | `exclude`   | This property is the same as `include`, except it specifies which files to exclude.<br/>It is a single [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)), or an array of them. | `undefined` |
 | `prepend`   | The string to prepend to `include` and `exclude` entries | `"**/"` |
