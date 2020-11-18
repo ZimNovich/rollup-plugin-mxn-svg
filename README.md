@@ -74,7 +74,7 @@ This plugin has the following configuration options:
 | `include`   | This property specifies which files to include. It is a single [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)), or an array of them. | `"*.svg"` |
 | `exclude`   | This property is the same as `include`, except it specifies which files to exclude.<br/>It is a single [glob pattern](https://en.wikipedia.org/wiki/Glob_(programming)), or an array of them. | `undefined` |
 | `prepend`   | The string to prepend to `include` and `exclude` entries | `"**/"` |
-| `clean`     | The function used to clean up / prepare an SVG file for inlining. It removes the `DOCTYPE`, XML declaration, comments and namespaced attributes and has a `(rawSVG) => string` or `(rawSVG) => Promise<string>` function signature. | `function` |
+| `clean`     | The function used to clean up & prepare an SVG file for inlining. It removes the `DOCTYPE`, XML declaration, comments and namespaced attributes and has a `(rawSVG) => string` or `(rawSVG) => Promise<string>` function signature. | `function` |
 
 
 ## Examples

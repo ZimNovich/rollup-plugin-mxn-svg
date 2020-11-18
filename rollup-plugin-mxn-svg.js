@@ -53,6 +53,7 @@ module.exports = function(options) {
     // Setting default options
     const defaults = {
         imports: "import {h} from \"preact\";",
+        include: "*.svg",
         prepend: "**/",
         clean: function(rawSVG) {
             return rawSVG
