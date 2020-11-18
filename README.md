@@ -143,9 +143,9 @@ export default {
 
 ### Using SVGO
 
-[`options.clean`](#clean) allows you to specify a custom function to remove any unnecessary elements in your SVG files.
+An option [`clean`](#clean) allows you to specify a custom function to remove any unnecessary elements in your SVG files.
 
-<a href="https://github.com/svg/svgo" target="_blank">SVGO</a> can be used through [`options.clean`](#clean) to optimise your SVG files:
+<a href="https://github.com/svg/svgo" target="_blank">SVGO</a> can be used through [`clean`](#clean) to optimise your SVG files:
 
 ```js
 // rollup.config.js
@@ -181,8 +181,6 @@ export default {
 };
 ```
 
-**[Full _SVGO_ example here](https://github.com/kuzivany/simple-rollup-starters/tree/master/react)**
-
 ## Internals
 
 SVG files are imported as functional components which accept `props`.
@@ -197,7 +195,7 @@ An example `logo.svg` file:
 </svg>
 ```
 
-`import`ed in a javascript file:
+imported in a javascript file:
 
 ```jsx
 import Logo from 'path/to/logo.svg';
