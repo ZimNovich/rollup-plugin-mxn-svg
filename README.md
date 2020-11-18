@@ -4,8 +4,7 @@
 [![Install size](https://packagephobia.now.sh/badge?p=rollup-plugin-mxn-svg)](https://packagephobia.now.sh/result?p=rollup-plugin-mxn-svg)
 [![Downloads](https://img.shields.io/npm/dm/rollup-plugin-mxn-svg.svg)](https://npmjs.com/rollup-plugin-mxn-svg)
 
-A Rollup plugin that imports SVG files as JSX components.
-
+A Rollup plugin that imports SVG files as JSX components.<br/>
 It was forked by Ilya Zimnovich from [rollup-plugin-svgi](https://github.com/kuzivany/rollup-plugin-svgi), originally written by Kuzivakwashe.
 
 - ~5.5kb size
