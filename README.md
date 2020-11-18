@@ -22,7 +22,7 @@ $ npm install --save-dev rollup-plugin-mxn-svg
 
 ## Usage
 
-_Note. Use this plugin **before** any JSX ⇒ JS transformation plugins so JSX output from this plugin will be transpiled to regular JS calls._
+_Note. Use this plugin **before** any JSX ⇒ JS transformation plugins so JSX output from this plugin will be converted to regular JS calls._
 
 Suppose an entry file containing the snippet below exists at `src/entry.js`, and attempts to load `src/logo.svg` from memory:
 
